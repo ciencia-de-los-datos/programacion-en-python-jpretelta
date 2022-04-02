@@ -21,7 +21,11 @@ def pregunta_01():
     214
 
     """
-    return
+    with open('data.csv', 'r') as file:  
+        lines=file.readlines()
+    suma = sum([int(row[2]) for row in lines])
+
+    return suma
 
 
 def pregunta_02():
@@ -39,7 +43,23 @@ def pregunta_02():
     ]
 
     """
-    return
+    import operator
+
+    with open('data.csv', 'r') as file:  
+        lines=file.readlines()
+    letras = [row[0] for row in lines]
+    
+    salida = dict()
+    for letra in letras:
+        if letra in salida.keys():
+            salida[letra] = salida[letra] + 1
+        else:
+            salida[letra] = 1
+            
+    tuplas = [(v, k) for v,k in salida.items()]
+    tuplas = sorted(tuplas, key=operator.itemgetter(0), reverse=False)
+
+    return tuplas
 
 
 def pregunta_03():
