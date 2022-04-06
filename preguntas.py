@@ -56,7 +56,7 @@ def pregunta_02():
         else:
             salida[letra] = 1
             
-    tuplas = [(v, k) for v,k in salida.items()]
+    tuplas = [(k, v) for k,v in salida.items()]
     tuplas = sorted(tuplas, key=operator.itemgetter(0), reverse=False)
 
     return tuplas
@@ -77,7 +77,23 @@ def pregunta_03():
     ]
 
     """
-    return
+    import operator
+
+    with open('data.csv', 'r') as file:  
+        lines=file.readlines()
+    letras = [(row[0], row[2]) for row in lines]
+
+    salida = dict()
+    for letra, valornum in letras:
+        if letra in salida.keys():
+            salida[letra] = salida[letra] + int(valornum)
+        else:
+            salida[letra] = int(valornum)
+            
+    tuplas = [(k, v) for k,v in salida.items()]
+    tuplas = sorted(tuplas, key=operator.itemgetter(0), reverse=False)
+
+    return tuplas
 
 
 def pregunta_04():
