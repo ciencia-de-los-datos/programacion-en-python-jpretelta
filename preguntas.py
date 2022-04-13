@@ -118,7 +118,7 @@ def pregunta_04():
     ]
 
     """
-    from datetime import datetime, date
+    from datetime import datetime
     import operator
 
     with open('data.csv', 'r') as file:  
@@ -159,7 +159,35 @@ def pregunta_05():
     ]
 
     """
-    return
+    from datetime import datetime 
+    import operator
+
+    with open('data.csv', 'r') as file:  
+        data=file.readlines()
+    data = [row.replace('\n', '') for row in data]
+    data = [row.split("\t") for row in data]
+
+    data_letters = [[row[0], row[1]] for row in data]
+    letter_values = dict()
+    for dl in data_letters:
+        letter = dl[0]
+        if letter not in letter_values.keys():        
+            letter_values[letter] = (
+                max([
+                    int(row[1]) 
+                    for row in data_letters 
+                    if row[0] == letter
+                ]),
+                min([
+                    int(row[1]) 
+                    for row in data_letters 
+                    if row[0] == letter
+                ])
+            )
+        
+    tuplas = [(k, v[0], v[1]) for k,v in letter_values.items()]
+    tuplas = sorted(tuplas, key=operator.itemgetter(0), reverse=False)
+    return tuplas
 
 
 def pregunta_06():
