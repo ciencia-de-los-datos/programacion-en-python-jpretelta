@@ -118,7 +118,30 @@ def pregunta_04():
     ]
 
     """
-    return
+    from datetime import datetime, date
+    import operator
+
+    with open('data.csv', 'r') as file:  
+        data=file.readlines()
+    data = [row.replace('\n', '') for row in data]
+    data = [row.split("\t") for row in data]
+
+    log_month = [row[2] for row in data]
+    count_per_month = dict()
+    for ddate in log_month:
+        yyear, mmonth, dday = int(ddate[:4]), int(ddate[5:7]), int(ddate[8:10])
+        if mmonth == 2 and dday == 29:
+            dday = 28
+        month =  datetime.strptime(f'{yyear}-{mmonth}-{dday}', '%Y-%m-%d').strftime('%m')
+        if month in count_per_month.keys():
+            count_per_month[month] = count_per_month[month] + 1
+        else:
+            count_per_month[month] = 1
+            
+    tuplas = [(k, v) for k,v in count_per_month.items()]
+    tuplas = sorted(tuplas, key=operator.itemgetter(0), reverse=False)
+
+    return tuplas
 
 
 def pregunta_05():
