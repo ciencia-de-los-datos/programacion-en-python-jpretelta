@@ -265,7 +265,26 @@ def pregunta_07():
     ]
 
     """
-    return
+    import operator
+
+    with open('data.csv', 'r') as file:  
+        data=file.readlines()
+    data = [row.replace('\n', '') for row in data]
+    data = [row.split("\t") for row in data]
+
+    data_letters = [[row[0], row[1]] for row in data]
+
+    letter_values = dict()
+    for kvpair in data_letters:
+        kkey = int(kvpair[1])
+        if kkey not in letter_values.keys():        
+            letter_values[kkey] = (
+                [row[0] for row in data_letters if int(row[1]) == kkey]
+            )
+            
+    tuplas = [(k, v) for k,v in letter_values.items()]
+    tuplas = sorted(tuplas, key=operator.itemgetter(0), reverse=False)
+    return tuplas
 
 
 def pregunta_08():
