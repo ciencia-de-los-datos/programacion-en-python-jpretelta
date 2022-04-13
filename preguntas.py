@@ -352,7 +352,29 @@ def pregunta_09():
     }
 
     """
-    return
+    import operator
+
+    with open('data.csv', 'r') as file:  
+        data=file.readlines()
+    data = [row.replace('\n', '') for row in data]
+    data = [row.split("\t") for row in data]
+
+    data_dict = [row[4].split(',') for row in data]
+    data_dict = [row_kv for row in data_dict for row_kv in row]
+    data_dict = [row.split(":") for row in data_dict]
+
+    letter_values = dict()
+    for kvpair in data_dict:
+        kkey = kvpair[0]
+        if kkey in letter_values.keys():        
+            letter_values[kkey] = letter_values[kkey] + 1
+        else:
+            letter_values[kkey] = 1 
+
+    tuplas = [(k, v) for k,v in letter_values.items()]
+    tuplas = sorted(tuplas, key=operator.itemgetter(0), reverse=False)
+    dict_tuplas = dict(tuplas)
+    return dict_tuplas
 
 
 def pregunta_10():
