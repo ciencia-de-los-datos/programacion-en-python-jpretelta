@@ -395,7 +395,13 @@ def pregunta_10():
 
 
     """
-    return
+    with open('data.csv', 'r') as file:  
+        data=file.readlines()
+    data = [row.replace('\n', '') for row in data]
+    data = [row.split("\t") for row in data]
+
+    data_letters = [(row[0], len(row[3].split(',')), len(row[4].split(','))) for row in data]
+    return data_letters
 
 
 def pregunta_11():
