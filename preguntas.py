@@ -186,6 +186,7 @@ def pregunta_05():
         
     tuplas = [(k, v[0], v[1]) for k,v in letter_values.items()]
     tuplas = sorted(tuplas, key=operator.itemgetter(0), reverse=False)
+    
     return tuplas
 
 
@@ -241,6 +242,7 @@ def pregunta_06():
             
     tuplas = [(k, v[0], v[1]) for k,v in letter_values.items()]
     tuplas = sorted(tuplas, key=operator.itemgetter(0), reverse=False)
+    
     return tuplas
 
 
@@ -284,6 +286,7 @@ def pregunta_07():
             
     tuplas = [(k, v) for k,v in letter_values.items()]
     tuplas = sorted(tuplas, key=operator.itemgetter(0), reverse=False)
+    
     return tuplas
 
 
@@ -329,6 +332,7 @@ def pregunta_08():
     letter_values = {key:list(dict.fromkeys(value)) for (key, value) in letter_values.items()}
     tuplas = [(k, sorted(v, key=operator.itemgetter(0), reverse=False)) for k,v in letter_values.items()]
     tuplas = sorted(tuplas, key=operator.itemgetter(0), reverse=False)
+    
     return tuplas
 
 
@@ -374,6 +378,7 @@ def pregunta_09():
     tuplas = [(k, v) for k,v in letter_values.items()]
     tuplas = sorted(tuplas, key=operator.itemgetter(0), reverse=False)
     dict_tuplas = dict(tuplas)
+    
     return dict_tuplas
 
 
@@ -401,6 +406,7 @@ def pregunta_10():
     data = [row.split("\t") for row in data]
 
     data_letters = [(row[0], len(row[3].split(',')), len(row[4].split(','))) for row in data]
+    
     return data_letters
 
 
@@ -446,6 +452,7 @@ def pregunta_11():
     tuplas = [(k, v) for k,v in data_sum_letters.items()]
     tuplas = sorted(tuplas, key=operator.itemgetter(0), reverse=False)
     dict_tuplas = dict(tuplas)
+    
     return dict_tuplas
 
 
@@ -464,4 +471,32 @@ def pregunta_12():
     }
 
     """
-    return
+    import operator
+
+    with open('data.csv', 'r') as file:  
+        data=file.readlines()
+    data = [row.replace('\n', '') for row in data]
+    data = [row.split("\t") for row in data]
+
+    data_values = [[row[0], row[4].split(",")] for row in data]
+    data_values = [
+        [   
+            row[0],
+            dl.split(":")[1]
+        ]
+        for row in data_values
+        for dl in row[1]
+    ]
+
+    data_sum_letters = dict()
+    for letra, valornum in data_values:
+        if letra in data_sum_letters.keys():
+            data_sum_letters[letra] = data_sum_letters[letra] + int(valornum)
+        else:
+            data_sum_letters[letra] = int(valornum)
+            
+    tuplas = [(k, v) for k,v in data_sum_letters.items()]
+    tuplas = sorted(tuplas, key=operator.itemgetter(0), reverse=False)
+    dict_tuplas = dict(tuplas)
+    
+    return dict_tuplas
